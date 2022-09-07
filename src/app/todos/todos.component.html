@@ -1,0 +1,17 @@
+<h1>My To Do</h1>
+<p>Your list contains {{todos.length}}</p>
+<ul>
+    <li *ngFor="let todo of todos; index as i;" (click)="clickedLi(i)">
+        {{todo.title}} (id = {{todo.id}})
+        <span *ngIf="todo.completed">v</span>
+        <span *ngIf="!todo.completed">x</span>
+    </li>
+</ul>
+
+<pre>
+
+
+    daakkdaad
+
+    dd
+</pre>
