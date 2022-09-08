@@ -34,10 +34,28 @@ export class TodosComponent implements OnInit {
       })
     })
   }
+  //before:
+  // clickedLi(indexId: number): void {
+  //   console.log('You clicked a li with index ' + indexId);
+  //   prompt('What is the new title?', this.todos[indexId].title);
+  // }
 
+  // from homework:
   clickedLi(indexId: number): void {
-    console.log('You clicked a li with index ' + indexId);
-    prompt('What is the new title?', this.todos[indexId].title);
+    const newTitle: any = prompt('What is the new title?', this.todos[indexId].title);
+    if(newTitle) {
+        fetch('https://jsonplaceholder.typicode.com/todos/'+indexId, {
+          method: 'PUT',
+          body: JSON.stringify({
+            title: newTitle
+          })
+        }).then(data => {
+          console.log('I received ', data)
+          data.json().then(parsed => {
+            console.log("parsed ", parsed);
+          })
+        })
+    }
   }
 
 }
