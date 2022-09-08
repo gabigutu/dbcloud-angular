@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DateService } from '../services/date.service';
+import { ITodo } from './itodo';
 
 @Component({
   selector: 'app-todos',
@@ -8,21 +10,31 @@ import { Component, OnInit } from '@angular/core';
 export class TodosComponent implements OnInit {
 
   // request all todos from jsonplaceholder and save them into an array
-  todos: any[];
+  todos: ITodo[];
   // https://jsonplaceholder.typicode.com/todos
+  todosEndpoint: string = 'http://localhost:3000/todos';
+  emptyTodo: ITodo = {} as ITodo;
+  username: string;
 
-  constructor() {
+  // dependency injection
+  constructor(private dateService: DateService) {
     this.todos = [];
     console.log('construct component');
+    this.emptyTodo.title = 'Empty Todo';
+    this.emptyTodo.id = -1;
+    this.username = 'vasile';
   }
 
   ngOnInit(): void {
     console.log('init component');
     this.requestTodos();
+    console.log(this.dateService.generateDate());
+    this.testArr();
   }
 
+
   requestTodos(): void {
-    const url: string = 'https://jsonplaceholder.typicode.com/todos';
+    const url: string = this.todosEndpoint;
     const that = this;
     fetch(url).then(response => {
       console.log('I received ', response); // ?
@@ -40,22 +52,25 @@ export class TodosComponent implements OnInit {
   //   prompt('What is the new title?', this.todos[indexId].title);
   // }
 
-  // from homework:
-  clickedLi(indexId: number): void {
-    const newTitle: any = prompt('What is the new title?', this.todos[indexId].title);
-    if(newTitle) {
-        fetch('https://jsonplaceholder.typicode.com/todos/'+indexId, {
-          method: 'PUT',
-          body: JSON.stringify({
-            title: newTitle
-          })
-        }).then(data => {
-          console.log('I received ', data)
-          data.json().then(parsed => {
-            console.log("parsed ", parsed);
-          })
-        })
+  requestedUpdateListAfterDelete(index: number): void {
+    console.log('requested list update after delete', index);
+    this.todos.splice(index, 1);
+  }
+
+  testArr(): void {
+    let isTrue = true;
+    let isTrue2 = false;
+    if (console.log('I received '), isTrue2, isTrue) {
+      console.log('e adevarat');
+    } else {
+      console.log('e fals');
     }
+
+    var arr = [];
+    arr[0] = 1;
+    arr[1] = 7; // delete
+    arr[2] = 9;
+    arr.splice(1, 1)
   }
 
 }

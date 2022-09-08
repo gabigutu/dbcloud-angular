@@ -1,0 +1,6 @@
+<li (click)="clickedLi()" [ngClass]="todo.id < 10 ? 'empty-todo' : 'regular-todo'">
+    {{todo.title}} (id = {{todo.id}})
+    <span *ngIf="todo.completed">v</span>
+    <span *ngIf="!todo.completed">x</span>
+    <a (click)="deleteTodo($event)">Delete</a>
+</li>

@@ -1,11 +1,15 @@
 <h1>My To Do</h1>
+<p>Hello, {{username}}</p>
+<p>
+    <label for="username">Change your username:</label>
+    <input id="username" type="text" [(ngModel)]="username" />
+</p>
+
 <p>Your list contains {{todos.length}}</p>
 <ul>
-    <li *ngFor="let todo of todos; index as i;" (click)="clickedLi(i)">
-        {{todo.title}} (id = {{todo.id}})
-        <span *ngIf="todo.completed">v</span>
-        <span *ngIf="!todo.completed">x</span>
-    </li>
+    <app-todo *ngFor="let todo of todos; index as i;" [index]="i" [todo]="todo.id < 10 ? emptyTodo : todo"
+        (listUpdated)="requestedUpdateListAfterDelete($event)">
+    </app-todo>
 </ul>
 
 <pre>
