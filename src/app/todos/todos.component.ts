@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '../services/date.service';
-import { ITodo } from './itodo';
+import { ITodo } from '../models/itodo';
 
 @Component({
   selector: 'app-todos',

@@ -1,0 +1,24 @@
+<h1>Details for todo #{{idTodo}}</h1>
+
+<h2>Title: {{todo.title | uppercase}}</h2>
+<p>User id: {{todo.userId}}</p>
+
+<h2>User details (#{{user.id}}</h2>
+<p>
+    Name: <span>{{user.name}}</span>
+    Username: <span>{{user.username}}</span>
+    Email: <span>{{user.email}}</span>
+</p>
+
+<input *ngIf="todo.completed" type="checkbox" checked />
+<input *ngIf="!todo.completed" type="checkbox" />
+<ng-container *ngIf="todo.completed">
+    completed
+</ng-container>
+<ng-container *ngIf="!todo.completed">
+    uncompleted
+</ng-container>
+
+<p *ngIf="todo.id && todo.title">
+    Completed: {{todo.completed | writeascheck:todo.id.toString():todo.title}}
+</p>

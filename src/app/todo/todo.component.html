@@ -1,6 +1,12 @@
 <li (click)="clickedLi()" [ngClass]="todo.id < 10 ? 'empty-todo' : 'regular-todo'">
-    {{todo.title}} (id = {{todo.id}})
+    {{todo.title | uppercase | slice:0:30}}
+    <ng-container *ngIf="todo.title && todo.title.length > 30">
+        ...
+    </ng-container>
+    (id = {{todo.id}})
     <span *ngIf="todo.completed">v</span>
     <span *ngIf="!todo.completed">x</span>
-    <a (click)="deleteTodo($event)">Delete</a>
+    <a (click)="deleteTodo($event)" class="li">Delete</a>&nbsp;&nbsp;
+    <a (click)="viewTodo($event, todo.id)">View by click</a>&nbsp;&nbsp;
+    <a *ngIf="todo.id != -1" [routerLink]="['view/', todo.id]">View by link</a>
 </li>

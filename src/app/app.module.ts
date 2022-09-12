@@ -6,12 +6,16 @@ import { AppComponent } from './app.component';
 import { TodosComponent } from './todos/todos.component';
 import { TodoComponent } from './todo/todo.component';
 import { FormsModule } from '@angular/forms';
+import { TodoDetailsComponent } from './todo-details/todo-details.component';
+import { WriteascheckPipe } from './writeascheck.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodosComponent,
-    TodoComponent
+    TodoComponent,
+    TodoDetailsComponent,
+    WriteascheckPipe
   ],
   imports: [
     BrowserModule,

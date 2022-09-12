@@ -1,1 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
+ul li {
+    padding: 4px 0 2px;
+}

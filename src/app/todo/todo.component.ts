@@ -1,5 +1,6 @@
-import { ITodo } from './../todos/itodo';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { ITodo } from '../models/itodo';
 
 @Component({
   selector: 'app-todo',
@@ -18,7 +19,7 @@ export class TodoComponent implements OnInit {
 
   todosEndpoint: string = 'http://localhost:3000/todos'; // TODO: move in service
 
-  constructor() {
+  constructor(private router: Router) {
     this.index = 0;
     this.todo = {} as ITodo;
   }
@@ -55,6 +56,15 @@ export class TodoComponent implements OnInit {
       // this.todos.splice(this.index, 1);
       this.listUpdated.emit(this.index);
     });
+  }
+
+  viewTodo(event: any, todoId: number): void {
+    event.stopPropagation();
+    console.log('test', todoId);
+    // la componenta TodoDetails 
+    // window.location.href = 'http://localhost:4200/view/' + todoId;
+    this.router.navigate(['view/', todoId]);
+    // use navigate
   }
 
 }
