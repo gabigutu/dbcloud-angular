@@ -1,0 +1,19 @@
+{
+    "urlParts": {
+        "protocol": "http",
+        "server": "localhost",
+        "port": 3000
+    },
+    "endpoints": [
+        {
+            "name": "todos",
+            "queryParams": {
+                "param1": "value1",
+                "param2": "value2"
+            }
+        },
+        {
+            "name": "users"
+        }
+    ]
+}
