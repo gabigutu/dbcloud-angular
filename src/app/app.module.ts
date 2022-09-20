@@ -8,6 +8,7 @@ import { TodoComponent } from './todo/todo.component';
 import { FormsModule } from '@angular/forms';
 import { TodoDetailsComponent } from './todo-details/todo-details.component';
 import { WriteascheckPipe } from './writeascheck.pipe';
+import { EmphasizedDirective } from './emphasized.directive';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { WriteascheckPipe } from './writeascheck.pipe';
     TodosComponent,
     TodoComponent,
     TodoDetailsComponent,
-    WriteascheckPipe
+    WriteascheckPipe,
+    EmphasizedDirective
   ],
   imports: [
     BrowserModule,

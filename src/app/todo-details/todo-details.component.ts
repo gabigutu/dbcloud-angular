@@ -28,21 +28,19 @@ export class TodoDetailsComponent implements OnInit {
     this.idTodo = 0;
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // this.myPromiseThen();
     // this.myPromiseAwait();
+    console.log('ng on init');
 
     // read param id from path
-    const that = this;
-    // call this without delay
-    setTimeout(function() {
-      that.readIdParamAndRequestTodoAndUser();
-    }, 2000);
-    console.log('(D) ============');
+      await this.requestService.setupApi();
+      this.readIdParamAndRequestTodoAndUser();
     // read endpoints from service
     // TODO: environment variable to show console.logs only in DEBUG MODE
   }
 
+  /* DELETE ME (NOT USED ANYMORE) */
   async requestAllDetails(): Promise<any> {
     // const idParam = await this.urlParamsService.readParam<number>('id');
     const idParam = await this.readParam<number>('id');
@@ -76,19 +74,19 @@ export class TodoDetailsComponent implements OnInit {
         console.info("(1) request was sent")
         // this.todo = await this.requestTodoById(this.idTodo);
         // this.todo = await this.requestTodoByIdAwait(this.idTodo);
-        let test = {} as ITodo;
         // TODO: add todo to url
-        test = await this.requestService.sendRequest<ITodo>(test, "todos");
-        console.log('Received test =======', test);
-
+        this.todo = await this.requestService.sendRequest<ITodo>(this.todo, "todos", [this.idTodo.toString()]);
+        console.log('Received todo =======', this.todo);
         console.log('(3) user id', this.todo.userId);
-        this.requestUserById(this.todo.userId);
+        this.user = await this.requestService.sendRequest<IUser>(this.user, "users", [this.todo.userId.toString()]);
+        // this.requestUserById(this.todo.userId);
       } else {
         console.error("id todo is zero, cannot send request");
       }
     });
   }
 
+  /* DELETE ME (NOT USED ANYMORE) */
   async requestTodoByIdAwait(idTodo: number): Promise<ITodo> {
     const url: string = this.todosEndpoint + '/' + idTodo;
     return new Promise(async (resolve, reject) => {
@@ -101,6 +99,7 @@ export class TodoDetailsComponent implements OnInit {
     });
   }
 
+  /* DELETE ME (NOT USED ANYMORE) */
   requestTodoById(idTodo: number): Promise<any> {
     const url: string = this.todosEndpoint + '/' + idTodo;
     return new Promise((resolve, reject) => {
@@ -127,6 +126,7 @@ export class TodoDetailsComponent implements OnInit {
     // return {} as ITodo;
   }
 
+  /* DELETE ME (NOT USED ANYMORE) */
   requestUserById(idUser: number): void {
     const url: string = this.usersEndpoint + '/' + idUser;
     fetch(url).then(response => {

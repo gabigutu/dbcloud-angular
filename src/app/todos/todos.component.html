@@ -7,7 +7,7 @@
 
 <p>Your list contains {{todos.length}}</p>
 <ul>
-    <app-todo *ngFor="let todo of todos; index as i;" [index]="i" [todo]="todo.id < 10 ? emptyTodo : todo"
+    <app-todo [username]="usernameFromUser(todo.userId)" *ngFor="let todo of todos; index as i;" [index]="i" [todo]="todo.id < 10 ? emptyTodo : todo"
         (listUpdated)="requestedUpdateListAfterDelete($event)">
     </app-todo>
 </ul>

@@ -1,3 +1,5 @@
+import { IUser } from './../models/iuser';
+import { RequestService } from './../services/request.service';
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '../services/date.service';
 import { ITodo } from '../models/itodo';
@@ -14,25 +16,51 @@ export class TodosComponent implements OnInit {
   // https://jsonplaceholder.typicode.com/todos
   todosEndpoint: string = 'http://localhost:3000/todos';
   emptyTodo: ITodo = {} as ITodo;
+  users: IUser[];
   username: string;
 
   // dependency injection
-  constructor(private dateService: DateService) {
+  constructor(
+    private dateService: DateService,
+    private requestService: RequestService
+  ) {
     this.todos = [];
+    this.users = [];
     console.log('construct component');
     this.emptyTodo.title = 'Empty Todo';
     this.emptyTodo.id = -1;
     this.username = 'vasile';
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     console.log('init component');
-    this.requestTodos();
+    // this.requestTodos();
+    await this.requestService.setupApi();
+    this.todos = await this.requestService.sendRequest<ITodo[]>(this.todos, "todos"); // remove await
+    this.users = await this.requestService.sendRequest<IUser[]>(this.users, "users"); // remove await
+    // for(let user: IUser of this.users) {
+
+    // }
+    // 186: request todos //localhost:3000/todos + 185 x request user (id x) //localhost:3000/user/x
+    // 11: request todos //localhost:3000/todos + 10 x request unique user (id x) //localhost:3000/user/x
+    // 2: request todos //localhost:3000/todos + 1 x request all users //localhost:3000/users
+
     console.log(this.dateService.generateDate());
-    this.testArr();
+    // this.testArr();
+    this.testUndefined();
   }
 
+  usernameFromUser(idUser: number): string {
+    let user: IUser = this.users.find(x => x.id == idUser)!;
+    let username: string | undefined = user?.username;
+    if (username != undefined && typeof user != 'undefined') {
+      return username;
+    } else {
+      return '';  
+    }
+  }
 
+  /* DELETE ME (NOT USED ANYMORE) */
   requestTodos(): void {
     const url: string = this.todosEndpoint;
     const that = this;
@@ -55,6 +83,16 @@ export class TodosComponent implements OnInit {
   requestedUpdateListAfterDelete(index: number): void {
     console.log('requested list update after delete', index);
     this.todos.splice(index, 1);
+  }
+
+  testUndefined(): void {
+    var x = undefined;
+    console.log(x, typeof x);
+    var y  =5;
+    console.log(y, typeof y);
+    console.log(undefined, typeof undefined); // ?
+    console.log(typeof undefined == 'undefined'); // true
+    console.log(typeof undefined == undefined); // false
   }
 
   testArr(): void {

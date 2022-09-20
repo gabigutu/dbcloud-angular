@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IUser } from './../models/iuser';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ITodo } from '../models/itodo';
 
@@ -15,13 +16,17 @@ export class TodoComponent implements OnInit {
   @Input()
   todo: ITodo;
 
+  @Input()
+  username: string | undefined;
+
   @Output() listUpdated = new EventEmitter<number>();
 
   todosEndpoint: string = 'http://localhost:3000/todos'; // TODO: move in service
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private cdRef: ChangeDetectorRef) {
     this.index = 0;
     this.todo = {} as ITodo;
+    this.username = '';
   }
 
   ngOnInit(): void {
@@ -42,6 +47,16 @@ export class TodoComponent implements OnInit {
         })
       });
     }
+  }
+
+  randomColor(): string {
+    // #63ad32
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+  }
+
+  ngAfterViewInit() {
+    console.log("! changement de la date du composant !");
+    this.cdRef.detectChanges();
   }
 
 

@@ -1,4 +1,11 @@
-<li (click)="clickedLi()" [ngClass]="todo.id < 10 ? 'empty-todo' : 'regular-todo'">
+<!-- [ngStyle]="{'backgound-color': '#ccc'}" -->
+<!-- style="background-color: #ccc; font-size: 20px;" -->
+<li (click)="clickedLi()" [ngClass]="todo.id < 10 ? 'empty-todo' : 'regular-todo'"
+    [ngStyle]="{
+        'background-color': '#ccc',
+        'font-size': '20px'
+    }" data-color="#63ac22" appEmphasized>
+    <!-- [attr.data-color]="randomColor()" -->
     {{todo.title | uppercase | slice:0:30}}
     <ng-container *ngIf="todo.title && todo.title.length > 30">
         ...
@@ -7,6 +14,7 @@
     <span *ngIf="todo.completed">v</span>
     <span *ngIf="!todo.completed">x</span>
     <a (click)="deleteTodo($event)" class="li">Delete</a>&nbsp;&nbsp;
-    <a (click)="viewTodo($event, todo.id)">View by click</a>&nbsp;&nbsp;
-    <a *ngIf="todo.id != -1" [routerLink]="['view/', todo.id]">View by link</a>
+    <a [attr.data-completed]="todo.completed" (click)="viewTodo($event, todo.id)">View by click</a>&nbsp;&nbsp;
+    <a *ngIf="todo.id != -1" [routerLink]="['view/', todo.id]">View by link</a>&nbsp;
+    Username: {{username}}
 </li>

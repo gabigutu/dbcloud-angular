@@ -22,3 +22,5 @@
 <p *ngIf="todo.id && todo.title">
     Completed: {{todo.completed | writeascheck:todo.id.toString():todo.title}}
 </p>
+
+<a [routerLink]="['/']">Go back to the list</a>
